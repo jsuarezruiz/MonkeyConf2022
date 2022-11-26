@@ -1,0 +1,10 @@
+Installing the Tools
+
+dotnet tool install -g dotnet-trace
+dotnet tool install -g dotnet-dsrouter
+
+Trace Output
+
+Visual Studio
+PerfView
+https://www.speedscope.app/
