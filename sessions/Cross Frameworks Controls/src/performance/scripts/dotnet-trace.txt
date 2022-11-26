@@ -1,10 +1,39 @@
-Installing the Tools
+- Installing the Tools
 
 dotnet tool install -g dotnet-trace
 dotnet tool install -g dotnet-dsrouter
 
-Trace Output
+- Trace Output
 
 Visual Studio
 PerfView
 https://www.speedscope.app/
+
+- Profiling Android and iOS Applications
+
+dotnet-dsrouter client-server -tcps 192.168.1.115:9001 -ipcc maui-app --verbose debug
+dotnet-trace collect --diagnostic-port maui-app
+
+- Setting Environment Variable for Android Application
+
+DOTNET_DiagnosticPorts=192.168.1.115:9001
+
+environment.txt
+
+<ItemGroup Condition="'$(TargetFramework)'=='net7.0-android'">
+    <AndroidEnvironment Include="Android/environment.txt" />
+</ItemGroup>
+
+<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-android'">
+    <AndroidEnableProfiler>true</AndroidEnableProfiler>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-android'">
+    <RuntimeIdentifier>android-x64</RuntimeIdentifier>
+</PropertyGroup>
+
+- Setting Environment Variable for iOS Application
+
+<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-ios'">
+    <MtouchExtraArgs>$(MtouchExtraArgs) --setenv=DOTNET_DiagnosticPorts=192.168.1.115:9001</MtouchExtraArgs>
+</PropertyGroup>
