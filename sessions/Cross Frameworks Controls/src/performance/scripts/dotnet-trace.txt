@@ -11,29 +11,21 @@ https://www.speedscope.app/
 
 - Profiling Android and iOS Applications
 
-dotnet-dsrouter client-server -tcps 192.168.1.115:9001 -ipcc maui-app --verbose debug
-dotnet-trace collect --diagnostic-port maui-app
+> Set up reverse port forwarding:
+adb reverse tcp:9000 tcp:9001
 
-- Setting Environment Variable for Android Application
+> Configure the device so that the profiled app suspends until tracing utility connects
+adb shell setprop debug.mono.profile '127.0.0.1:9000,suspend'
 
-DOTNET_DiagnosticPorts=192.168.1.115:9001
+> Start the tracing router/proxy on host
+dotnet-dsrouter client-server -tcps 127.0.0.1:9001 -ipcc /tmp/maui-app --verbose debug
 
-environment.txt
+> Start the tracing client
+dotnet-trace collect --diagnostic-port /tmp/maui-app --format speedscope
 
-<ItemGroup Condition="'$(TargetFramework)'=='net7.0-android'">
-    <AndroidEnvironment Include="Android/environment.txt" />
-</ItemGroup>
+> Compile and run the application
+dotnet build -f net7.0-android -t:Run -c Release -p:AndroidEnableProfiler=true
 
 <PropertyGroup Condition="'$(TargetFramework)'=='net7.0-android'">
     <AndroidEnableProfiler>true</AndroidEnableProfiler>
-</PropertyGroup>
-
-<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-android'">
-    <RuntimeIdentifier>android-x64</RuntimeIdentifier>
-</PropertyGroup>
-
-- Setting Environment Variable for iOS Application
-
-<PropertyGroup Condition="'$(TargetFramework)'=='net7.0-ios'">
-    <MtouchExtraArgs>$(MtouchExtraArgs) --setenv=DOTNET_DiagnosticPorts=192.168.1.115:9001</MtouchExtraArgs>
 </PropertyGroup>

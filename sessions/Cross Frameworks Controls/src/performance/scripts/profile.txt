@@ -1,0 +1,2 @@
+com.companyname.performanceapp
+crc647bcd6f9d9bafdea1.MainActivity
