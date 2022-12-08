@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:app="clr-namespace:Monkeinjection.App"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Monkeinjection.App.Features.LogSample.LogSamplePage"
+             Title="LogSamplePage">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style TargetType="Button">
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="5" />
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ScrollView>
+		<Grid RowDefinitions="60,50,50,50,*" ColumnDefinitions="*,*">
+			<Entry x:Name="TxtEditor"
+				   Grid.Row="0" Grid.ColumnSpan="2"
+				   BackgroundColor="LightGray"
+				   Margin="5"
+				   HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+
+			<Button x:Name="BtnWriteInfo"
+					Grid.Row="1" Grid.ColumnSpan="2"
+					Text="Log Info" />
+
+			<Button x:Name="BtnWriteTrace"
+					Grid.Row="2" Grid.Column="0"
+					Text="Log Trace" />
+
+			<Button x:Name="BtnWriteWarning"
+					Grid.Row="2" Grid.Column="1"
+					Text="Log Warning" />
+
+			<Button x:Name="BtnWriteError"
+					Grid.Row="3" Grid.Column="0"
+					Text="Log Error" />
+
+			<Button x:Name="BtnWriteCritical"
+					Grid.Row="3" Grid.Column="1"
+					Text="Log Critical" />
+
+			<CollectionView x:Name="ListResult"
+							Grid.ColumnSpan="2" Grid.Row="4"
+							SelectionMode="Multiple"
+							Margin="5">
+				<CollectionView.ItemTemplate>
+					<DataTemplate x:DataType="app:CellModel">
+						<Border>
+							<VerticalStackLayout Padding="5,10">
+								<Label Text="{Binding Title}" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+								<Label Text="{Binding Line1}" LineBreakMode="WordWrap" />
+							</VerticalStackLayout>
+						</Border>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+		</Grid>
+	</ScrollView>
+</ContentPage>
