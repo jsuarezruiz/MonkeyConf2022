@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:app="clr-namespace:Monkeinjection.App"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Monkeinjection.App.Features.ScopesSample.MainPage">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style TargetType="Button">
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="5" />
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ScrollView>
+		<Grid RowDefinitions="50,50,*" ColumnDefinitions="*,*">
+			<Button x:Name="BtnResolveRoot"
+					Grid.Row="0" Grid.Column="0"
+					Text="Resuelve ServiceProvider" />
+
+			<Button x:Name="BtnResolveScope"
+					Grid.Row="0" Grid.Column="1"
+					Text="Resuelve Primer Scope" />
+
+			<Button x:Name="BtnCreateOtherScope"
+					Grid.Row="1" Grid.Column="0"
+					Text="Crear Otro Scope" />
+
+			<Button x:Name="BtnResolveLastScope"
+					Grid.Row="1" Grid.Column="1"
+					Text="Resuelve el último Scope" />
+
+			<CollectionView x:Name="ListResult"
+							Grid.ColumnSpan="2" Grid.Row="2"
+							SelectionMode="Multiple"
+							Margin="5">
+				<CollectionView.ItemTemplate>
+					<DataTemplate x:DataType="app:CellModel">
+						<Border>
+							<VerticalStackLayout Padding="5,10">
+								<Label Text="{Binding Title}" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+								<Label Text="{Binding Line1}" LineBreakMode="TailTruncation" />
+								<Label Text="{Binding Line2}" LineBreakMode="TailTruncation" />
+								<Label Text="{Binding Line3}" LineBreakMode="TailTruncation" />
+							</VerticalStackLayout>
+						</Border>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+		</Grid>
+	</ScrollView>
+
+</ContentPage>
